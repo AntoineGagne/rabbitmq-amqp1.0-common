@@ -16,8 +16,7 @@
 
 -spec clone_repository(Repository :: string(), Output :: string()) -> string().
 clone_repository(Repository, Output) ->
-    Raw = lists:join($ , ["git", "clone", Repository, Output]),
-    Command = unicode:characters_to_list(Raw),
+    Command = command(["git", "clone", Repository, Output]),
     os:cmd(Command).
 
 -spec specification_files() -> string().
@@ -30,10 +29,14 @@ specification_files() ->
 -spec generate(Output :: string(), Type :: string()) -> ok | {error, term()}.
 generate(Output, Type) ->
     SpecificationFiles = specification_files(),
-    Raw = lists:join($ , ["python", "codegen.py", Type, SpecificationFiles]),
-    Command = unicode:characters_to_list(Raw),
+    Command = command(["python", "codegen.py", Type, SpecificationFiles]),
     Result = os:cmd(Command),
     file:write_file(Output, Result).
+
+-spec command(Parts :: unicode:chardata()) -> string().
+command(Parts) ->
+    Joined = lists:join($ , Parts),
+    unicode:characters_to_list(Joined).
 
 -spec main([term()]) -> ok.
 main(_Arguments) ->
