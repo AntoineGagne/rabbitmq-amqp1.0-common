@@ -1,0 +1,14 @@
+{application, amqp10_common,
+ [{description, "AMQP 1.0 Common"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications,
+   [
+    kernel,
+    stdlib
+   ]},
+  {env, []},
+  {modules, []},
+  {licenses, []},
+  {links, []}
+ ]}.
